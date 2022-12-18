@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "8ecabcc2-9914-48f0-8037-f60f81047487",
+		"name": "TMS_Lesson_Servlet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20529626"
+	},
+	"item": [
+		{
+			"name": "Get all cars",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.5",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/cars",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get car by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.5",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/cars?id=2",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"cars"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new car",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.5",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/cars?id=4&model=Jeep&number=4444&owner=John",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"cars"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "4"
+						},
+						{
+							"key": "model",
+							"value": "Jeep"
+						},
+						{
+							"key": "number",
+							"value": "4444"
+						},
+						{
+							"key": "owner",
+							"value": "John"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update car data",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/cars?id=1&model=Jeep&number=1234&owner=John",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"cars"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "model",
+							"value": "Jeep"
+						},
+						{
+							"key": "number",
+							"value": "1234"
+						},
+						{
+							"key": "owner",
+							"value": "John"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete car",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.5",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/cars?id=3",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"cars"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
