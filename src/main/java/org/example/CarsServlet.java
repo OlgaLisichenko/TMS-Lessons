@@ -10,19 +10,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @WebServlet("/cars")
 public class CarsServlet extends HttpServlet {
 
-    private static Map<String, Car> cars = Map.of(
-            "1", new Car("BMW", "1111", "Bob"),
-            "2", new Car("AUDI", "2222", "Carl"),
-            "3", new Car("Mercedes", "3333", "Jack"));
+    private Map<String, Car> cars = new HashMap<>();
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         System.out.println("----------------------do init----------------------");
+        cars.put("1", new Car("BMW", "1111", "Bob"));
+        cars.put("2", new Car("AUDI", "2222", "Carl"));
+        cars.put("3", new Car("Mercedes", "3333", "Jack"));
     }
 
     @Override
@@ -33,57 +35,64 @@ public class CarsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession();
         LocalDateTime date = LocalDateTime.now();
-        resp.addCookie(new Cookie("JSESSIONID", date.format(DateTimeFormatter.ofPattern("HH-mm-ss"))));
+        resp.addCookie(new Cookie("Cookie_1", date.format(DateTimeFormatter.ofPattern("HH-mm-ss"))));
 
         System.out.println("----------------------Cookie----------------------");
         Cookie[] cookies = req.getCookies();
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("JSESSIONID")) {
+            if (cookie.getName().equals("Cookie_1")) {
                 System.out.println("The time of the last access to the server: " + cookie.getValue());
             }
         }
 
         System.out.println("----------------------do get all cars----------------------");
         ServletOutputStream servletOutputStream = resp.getOutputStream();
-        req.setAttribute("cars", cars);
-        Object cars1 = req.getAttribute("cars");
-        servletOutputStream.println("All cars: " + cars1);
-        System.out.println(cars1);
+        servletOutputStream.println("All cars: ");
+        System.out.println("All cars: ");
 
-        String id = req.getParameter("id");
-        Object o = cars.get(id);
+        Set<String> keys = cars.keySet();
+        for (String key : keys) {
+            Car car = cars.get(key);
+            System.out.println(key + " " + car);
+            servletOutputStream.println(key + " " + car);
+        }
+
         System.out.println("----------------------do get car by id----------------------");
-        System.out.println("Car by id " + id + " : " + o);
-        servletOutputStream.println("Car by id " + id + " : " + o);
+        String id = req.getParameter("id");
+        Car carById = cars.get(id);
+        System.out.println("Car by id " + id + " : " + carById);
+        servletOutputStream.println("Car by id " + id + " : " + carById);
 
-       // req.getRequestDispatcher("/WEB-INF/book.html").forward(req, resp);
+        //req.getRequestDispatcher("/WEB-INF/book.html").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         System.out.println("----------------------do post car----------------------");
-
         PrintWriter respWriter = resp.getWriter();
 
         String id = req.getParameter("id");
-        Car car = new Car();
-        String model = req.getParameter("model");
-        String number = req.getParameter("number");
-        String owner = req.getParameter("owner");
+        Car carById = cars.get(id);
 
-        car.setModel(model);
-        car.setNumber(number);
-        car.setOwner(owner);
+        if (id == null || id.isEmpty()) {
+            resp.setStatus(400);
+        } else if (carById != null) {
+            resp.setStatus(400);
+            respWriter.println("Car with this id already exists");
+        } else {
+            String model = req.getParameter("model");
+            String number = req.getParameter("number");
+            String owner = req.getParameter("owner");
 
-        respWriter.println(id + "=" + "Car {" +
-                           "model = '" + model + '\'' +
-                           ", number = '" + number + '\'' +
-                           ", owner = '" + owner + '\'' +
-                           '}');
+            respWriter.println(id + "=" + "Car {" +
+                               "model = '" + model + '\'' +
+                               ", number = '" + number + '\'' +
+                               ", owner = '" + owner + '\'' +
+                               '}');
 
-        cars.put(id, car);
+            cars.put(id, new Car(model, number, owner));
+        }
     }
 
     @Override
@@ -91,25 +100,43 @@ public class CarsServlet extends HttpServlet {
         System.out.println("----------------------do put car----------------------");
 
         PrintWriter respWriter = resp.getWriter();
-
         String id = req.getParameter("id");
-        String model = req.getParameter("model");
-        String number = req.getParameter("number");
-        String owner = req.getParameter("owner");
+        Car carById = cars.get(id);
 
-        respWriter.println(id + "=" + "Car {" +
-                           "model = '" + model + '\'' +
-                           ", number = '" + number + '\'' +
-                           ", owner = '" + owner + '\'' +
-                           '}');
+        if (id == null || id.isEmpty()) {
+            resp.setStatus(400);
+        } else if (carById == null) {
+            resp.setStatus(404);
+        } else {
+            String model = req.getParameter("model");
+            String number = req.getParameter("number");
+            String owner = req.getParameter("owner");
 
-        cars.put(id, new Car(model, number, owner));
+            respWriter.println(id + "=" + "Car {" +
+                               "model = '" + model + '\'' +
+                               ", number = '" + number + '\'' +
+                               ", owner = '" + owner + '\'' +
+                               '}');
+
+            cars.put(id, new Car(model, number, owner));
+        }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("----------------------do delete car by id----------------------");
+        ServletOutputStream servletOutputStream = resp.getOutputStream();
         String id = req.getParameter("id");
-        cars.remove(id, new Car());
+        Car carById = cars.get(id);
+
+        if (id == null || id.isEmpty()) {
+            resp.setStatus(400);
+        } else if (carById == null) {
+            resp.setStatus(404);
+        } else {
+            cars.remove(id);
+            servletOutputStream.println("Deleted car by id " + id + ": " + carById);
+            System.out.println("Deleted car by id " + id + ": " + carById);
+        }
     }
 }
