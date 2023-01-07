@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 
 @WebServlet("/delete")
 public class DeleteCarServlet extends HttpServlet {
@@ -15,11 +16,13 @@ public class DeleteCarServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HashMap<String, Car> cars = CarStorage.getCars();
+
         idDelete = req.getParameter("id-for-delete");
         if (idDelete != null) {
-            deleteCar = CarStorage.cars.get(idDelete.trim());
+            deleteCar = cars.get(idDelete.trim());
             if (deleteCar != null) {
-                CarStorage.cars.remove(idDelete.trim());
+                cars.remove(idDelete.trim());
             }
         }
         req.getRequestDispatcher("/car.jsp").forward(req, resp);

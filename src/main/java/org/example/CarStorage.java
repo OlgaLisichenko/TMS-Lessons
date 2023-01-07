@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 public class CarStorage {
 
-    public static HashMap<String, Car> cars = createHashMap();
+    private static HashMap<String, Car> cars = createHashMap();
 
-    public static HashMap<String, Car> createHashMap() {
+    private static HashMap<String, Car> createHashMap() {
         HashMap<String, Car> cars = new HashMap<>();
         cars.put("1", new Car("BMW", "1111", "Bob"));
         cars.put("2", new Car("AUDI", "2222", "Carl"));
@@ -14,7 +14,7 @@ public class CarStorage {
         return cars;
     }
 
-    public HashMap<String, Car> getCars() {
+    public static HashMap<String, Car> getCars() {
         return cars;
     }
 }

@@ -4,6 +4,7 @@
 <%@ page import="org.example.CarStorage" %>
 <%@ page import="static org.example.GetCarServlet.*" %>
 <%@ page import="static org.example.AddCarServlet.*" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,7 +20,7 @@
             <nav class="navbar" style="background-color: #ccccff;">
                 <div class="container-fluid">
                     <a class="navbar-brand">Cars</a>
-                    <form action="/getCars" method="get" class="d-flex" role="search">
+                    <form action="/cars" method="get" class="d-flex" role="search">
                         <a class="navbar-brand">Enter the car ID</a>
                         <input name="id" class="form-control me-2" type="search" placeholder="Search"
                                aria-label="Search">
@@ -42,13 +43,14 @@
                 </thead>
                 <tbody>
                 <%
+                    HashMap<String, Car> cars = CarStorage.getCars();
                     if (carById != null) {
                         out.println("<th scope='row'>" + id + " " +
                                     ("<td>" + carById.getModel() + "</td><td>" + carById.getNumber() + "</td><td>" + carById.getOwner() + "</td>"));
                     } else if (id == null || id.isBlank()) {
-                        Set<String> keys = CarStorage.cars.keySet();
+                        Set<String> keys = cars.keySet();
                         for (String key : keys) {
-                            Car car = CarStorage.cars.get(key);
+                            Car car = cars.get(key);
                             out.println("<tr><th scope='row'>" + key + " " +
                                         ("<td>" + car.getModel() + "</td><td>" + car.getNumber() + "</td><td>" + car.getOwner() + "</td>") + "</th>");
                         }
@@ -60,7 +62,7 @@
             </table>
 
             <p>
-            <form action="/cars" method="post" class="row g-3 needs-validation" novalidate>
+            <form action="/addCar" method="post" class="row g-3 needs-validation" novalidate>
                 <h5>Fill in the fields to create a record about your car</h5>
                 <div class="col-md-2">
                     <label for="validationCustom01" class="form-label">ID</label>

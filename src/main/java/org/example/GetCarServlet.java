@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
-@WebServlet("/getCars")
+@WebServlet("/cars")
 public class GetCarServlet extends HttpServlet {
 
     public static String id;
@@ -16,8 +16,7 @@ public class GetCarServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CarStorage carStorage = new CarStorage();
-        HashMap<String, Car> cars = carStorage.getCars();
+        HashMap<String, Car> cars = CarStorage.getCars();
 
         id = req.getParameter("id");
         if (id != null) {
