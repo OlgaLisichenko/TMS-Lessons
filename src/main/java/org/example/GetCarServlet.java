@@ -6,23 +6,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.List;
 
 @WebServlet("/cars")
 public class GetCarServlet extends HttpServlet {
 
-    public static String id;
-    public static Car carById;
+    CarService service = new CarServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HashMap<String, Car> cars = CarStorage.getCars();
-
-        id = req.getParameter("id");
+        req.setAttribute("cars", service.getAll());
+        String id = req.getParameter("id");
+        req.setAttribute("id", id);
         if (id != null) {
-            carById = cars.get(id.trim());
+            List<Car> cars = service.getById(id);
+            if (cars.size() > 0) {
+                Car carById = cars.get(0);
+                req.setAttribute("carById", carById);
+            }
         }
-        req.getRequestDispatcher("/car.jsp").forward(req, resp);
-        resp.sendRedirect("/cars");
+        req.getRequestDispatcher("/cars.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("cars", service.getAll());
+        req.getRequestDispatcher("/cars.jsp").forward(req, resp);
     }
 }
