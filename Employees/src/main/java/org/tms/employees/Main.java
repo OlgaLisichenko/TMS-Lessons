@@ -34,8 +34,9 @@ public class Main {
         //5. Создать сервис, который определяет есть ли у данного директора в подчинении сотрудник с указанным именем
         System.out.println("__________ 5 __________");
         SearchService service = new SearchService();
-        System.out.println(service.searchByName(director1, director2)); //true
-        System.out.println(service.searchByName(director2, worker1));   //false
-        System.out.println(service.searchByName(director1, worker3));   //true
+        System.out.println(service.searchByName(director1, "Максимов")); //true
+        System.out.println(service.searchByName(director2, "Фёдоров"));   //false
+        System.out.println(service.searchByName(director2, "Семёнов"));   //true
+        System.out.println(service.searchByName(director1, "Семёнов"));   //true
     }
 }
