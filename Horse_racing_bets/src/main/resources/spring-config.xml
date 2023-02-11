@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.tms.racing_bets.service.impl.HorseRaceServiceImpl" name="service" autowire="constructor"/>
+    <bean class="com.github.javafaker.Faker" name="faker"/>
+    <bean class="org.tms.racing_bets.domain.Pair" name="pair"/>
+
+    <bean class="org.tms.racing_bets.service.impl.BetsServiceImpl" name="bets">
+        <constructor-arg name="service" ref="service"/>
+    </bean>
+
+    <bean class="org.tms.racing_bets.domain.Horse" name="horse1" autowire="constructor"/>
+    <bean class="org.tms.racing_bets.domain.Horse" name="horse2" autowire="constructor"/>
+    <bean class="org.tms.racing_bets.domain.Horse" name="horse3" autowire="constructor"/>
+
+    <bean class="org.tms.racing_bets.domain.Rider" name="rider1" autowire="constructor"/>
+    <bean class="org.tms.racing_bets.domain.Rider" name="rider2" autowire="constructor"/>
+    <bean class="org.tms.racing_bets.domain.Rider" name="rider3" autowire="constructor"/>
+
+    <bean class="org.tms.racing_bets.domain.Pair" name="pair1">
+        <constructor-arg name="horse" ref="horse1"/>
+        <constructor-arg name="rider" ref="rider1"/>
+        <constructor-arg name="number" value="1"/>
+    </bean>
+    <bean class="org.tms.racing_bets.domain.Pair" name="pair2">
+        <constructor-arg name="horse" ref="horse2"/>
+        <constructor-arg name="rider" ref="rider2"/>
+        <constructor-arg name="number" value="2"/>
+    </bean>
+    <bean class="org.tms.racing_bets.domain.Pair" name="pair3">
+        <constructor-arg name="horse" ref="horse3"/>
+        <constructor-arg name="rider" ref="rider3"/>
+        <constructor-arg name="number" value="3"/>
+    </bean>
+</beans>
