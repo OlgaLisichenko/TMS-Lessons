@@ -2,12 +2,14 @@ package org.tms.racing_bets.service.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.stereotype.Service;
 import org.tms.racing_bets.domain.Pair;
 import org.tms.racing_bets.service.HorseRaceService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 @Data
 @AllArgsConstructor
 public class HorseRaceServiceImpl implements HorseRaceService {
