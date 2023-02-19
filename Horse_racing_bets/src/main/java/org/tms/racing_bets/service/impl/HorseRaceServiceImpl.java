@@ -13,9 +13,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class HorseRaceServiceImpl implements HorseRaceService {
-    Pair pair1;
-    Pair pair2;
-    Pair pair3;
+    private Pair pair1;
+    private Pair pair2;
+    private Pair pair3;
 
     @Override
     public List<Pair> getListOfPairs() {
