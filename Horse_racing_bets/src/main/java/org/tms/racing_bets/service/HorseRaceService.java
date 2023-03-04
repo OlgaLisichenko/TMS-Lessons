@@ -1,9 +1,11 @@
 package org.tms.racing_bets.service;
 
+import org.springframework.stereotype.Service;
 import org.tms.racing_bets.domain.Pair;
 
 import java.util.List;
 
+@Service
 public interface HorseRaceService {
 
     List<Pair> getListOfPairs();

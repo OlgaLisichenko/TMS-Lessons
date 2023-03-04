@@ -1,23 +1,25 @@
 package org.tms.racing_bets.service.impl;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.tms.racing_bets.aop.MyBenchmark;
 import org.tms.racing_bets.domain.Pair;
 import org.tms.racing_bets.service.BetsService;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Service
 @Data
+@RequiredArgsConstructor
 public class BetsServiceImpl implements BetsService {
 
     private int totalSum = 100;
-    private HorseRaceServiceImpl service;
-
-    public BetsServiceImpl(HorseRaceServiceImpl service) {
-        this.service = service;
-    }
+    private final HorseRaceServiceImpl service;
 
     @Override
+    @MyBenchmark
     public void makeBet() {
         try (Scanner scanner = new Scanner(System.in)) {
 
