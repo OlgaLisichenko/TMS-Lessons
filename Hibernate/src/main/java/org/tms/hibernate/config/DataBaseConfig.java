@@ -5,6 +5,7 @@ import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.tms.hibernate.domain.CourseEntity;
+import org.tms.hibernate.domain.StudentEntity;
 import org.tms.hibernate.domain.TeacherEntity;
 
 import java.util.Properties;
@@ -28,6 +29,7 @@ public class DataBaseConfig {
 
         configuration.addAnnotatedClass(CourseEntity.class);
         configuration.addAnnotatedClass(TeacherEntity.class);
+        configuration.addAnnotatedClass(StudentEntity.class);
 
         return configuration.buildSessionFactory();
     }

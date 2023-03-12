@@ -13,12 +13,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @Entity
@@ -39,8 +40,10 @@ public class CourseEntity {
     private Date startOfClasses;
     @Enumerated(EnumType.STRING)
     private City city;
-    @OneToOne
+    @ManyToOne
     @ToString.Exclude
-    @JoinColumn(name = "teacher_id")
     private TeacherEntity teacher;
+
+    @ManyToMany
+    private List<StudentEntity> students;
 }

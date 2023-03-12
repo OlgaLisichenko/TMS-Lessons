@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 
 @RequiredArgsConstructor
 @Data
-public class SessionService {
+public abstract class SessionService {
 
     private final SessionFactory factory;
     private Session session;
